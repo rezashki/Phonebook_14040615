@@ -9,6 +9,13 @@ import { Badge } from './ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 
 function Dashboard({ user, onLogout }) {
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('theme') || 'light'
+    } catch (e) {
+      return 'light'
+    }
+  })
   const [currentView, setCurrentView] = useState('dashboard')
   const [notices, setNotices] = useState([])
   const [stats, setStats] = useState({
@@ -23,6 +30,16 @@ function Dashboard({ user, onLogout }) {
       fetchDashboardData()
     }
   }, [currentView])
+
+  useEffect(() => {
+    const root = document.documentElement
+    if (theme === 'dark') {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+    try { localStorage.setItem('theme', theme) } catch (e) {}
+  }, [theme])
 
   const fetchDashboardData = async () => {
     try {
@@ -95,6 +112,14 @@ function Dashboard({ user, onLogout }) {
               <h1 className="text-2xl font-bold">Phonebook Dashboard</h1>
             </div>
             <div className="flex items-center space-x-4">
+              {/* Theme toggle */}
+              <div className="flex items-center gap-2">
+                <label htmlFor="theme-toggle" className="text-sm text-muted-foreground">Theme</label>
+                <select id="theme-toggle" value={theme} onChange={e => setTheme(e.target.value)} className="p-1 rounded border bg-input text-card-foreground">
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">
                   Welcome, {user.username}

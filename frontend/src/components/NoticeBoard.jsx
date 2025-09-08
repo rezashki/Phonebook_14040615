@@ -362,7 +362,7 @@ function NoticeBoard({ user }) {
                     <span> • Updated: {formatDate(notice.updated_at)}</span>
                   )}
                   {notice.created_by && (
-                    <span> • By: {notice.created_by}</span>
+                    <span> • By: {typeof notice.created_by === 'object' ? notice.created_by.username : notice.created_by}</span>
                   )}
                 </div>
               </div>
