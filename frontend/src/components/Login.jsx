@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { apiRequest, handleApiError } from '../utils/api'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
@@ -9,6 +9,25 @@ function Login({ onLogin }) {
   const [formData, setFormData] = useState({ username: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('theme') || 'light'
+    } catch (e) {
+      return 'light'
+    }
+  })
+
+  useEffect(() => {
+    const root = document.documentElement
+    if (theme === 'dark') {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+    try {
+      localStorage.setItem('theme', theme)
+    } catch (e) {}
+  }, [theme])
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
@@ -29,6 +48,22 @@ function Login({ onLogin }) {
 
   return (
     <div className="fixed inset-0 bg-background flex items-center justify-center p-4">
+      {/* Theme toggle in top right */}
+      <div className="absolute top-4 right-4">
+        <div className="flex items-center gap-2">
+          <label htmlFor="theme-toggle" className="text-sm text-muted-foreground">Theme</label>
+          <select 
+            id="theme-toggle" 
+            value={theme} 
+            onChange={e => setTheme(e.target.value)} 
+            className="p-1 rounded border bg-input text-card-foreground text-sm"
+          >
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+      </div>
+      
       <div className="w-full max-w-md">
         <Card className="shadow-lg">
           <CardHeader className="text-center space-y-4">

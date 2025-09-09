@@ -103,100 +103,101 @@ function Dashboard({ user, onLogout }) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold">Phonebook Dashboard</h1>
+    <div className="fixed inset-0 bg-background flex items-center justify-center p-4">
+      <div className="w-full max-w-7xl bg-background rounded-lg shadow-lg overflow-hidden">
+        {/* Header */}
+        <header className="border-b bg-card">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-6">
+              <div className="flex items-center">
+                <h1 className="text-2xl font-bold">Phonebook Dashboard</h1>
+              </div>
+              <div className="flex items-center space-x-4">
+                {/* Theme toggle */}
+                <div className="flex items-center gap-2">
+                  <label htmlFor="theme-toggle" className="text-sm text-muted-foreground">Theme</label>
+                  <select id="theme-toggle" value={theme} onChange={e => setTheme(e.target.value)} className="p-1 rounded border bg-input text-card-foreground">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    Welcome, {user.username}
+                  </span>
+                  <Badge variant="outline">{user.role}</Badge>
+                </div>
+                <Button
+                  onClick={handleLogout}
+                  variant="destructive"
+                  size="sm"
+                >
+                  Logout
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center space-x-4">
-              {/* Theme toggle */}
-              <div className="flex items-center gap-2">
-                <label htmlFor="theme-toggle" className="text-sm text-muted-foreground">Theme</label>
-                <select id="theme-toggle" value={theme} onChange={e => setTheme(e.target.value)} className="p-1 rounded border bg-input text-card-foreground">
-                  <option value="light">Light</option>
-                  <option value="dark">Dark</option>
-                </select>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">
-                  Welcome, {user.username}
-                </span>
-                <Badge variant="outline">{user.role}</Badge>
-              </div>
+            {/* Navigation */}
+            <nav className="flex space-x-2 pb-4">
               <Button
-                onClick={handleLogout}
-                variant="destructive"
+                onClick={() => setCurrentView('dashboard')}
+                variant={currentView === 'dashboard' ? 'default' : 'ghost'}
                 size="sm"
               >
-                Logout
+                Dashboard
               </Button>
-            </div>
+              <Button
+                onClick={() => setCurrentView('contacts')}
+                variant={currentView === 'contacts' ? 'default' : 'ghost'}
+                size="sm"
+              >
+                Contacts
+              </Button>
+              <Button
+                onClick={() => setCurrentView('companies')}
+                variant={currentView === 'companies' ? 'default' : 'ghost'}
+                size="sm"
+              >
+                Companies
+              </Button>
+              <Button
+                onClick={() => setCurrentView('notices')}
+                variant={currentView === 'notices' ? 'default' : 'ghost'}
+                size="sm"
+              >
+                Notice Board
+              </Button>
+              {user.role === 'admin' && (
+                <Button
+                  onClick={() => setCurrentView('users')}
+                  variant={currentView === 'users' ? 'default' : 'ghost'}
+                  size="sm"
+                >
+                  User Management
+                </Button>
+              )}
+            </nav>
           </div>
-          {/* Navigation */}
-          <nav className="flex space-x-2 pb-4">
-            <Button
-              onClick={() => setCurrentView('dashboard')}
-              variant={currentView === 'dashboard' ? 'default' : 'ghost'}
-              size="sm"
-            >
-              Dashboard
-            </Button>
-            <Button
-              onClick={() => setCurrentView('contacts')}
-              variant={currentView === 'contacts' ? 'default' : 'ghost'}
-              size="sm"
-            >
-              Contacts
-            </Button>
-            <Button
-              onClick={() => setCurrentView('companies')}
-              variant={currentView === 'companies' ? 'default' : 'ghost'}
-              size="sm"
-            >
-              Companies
-            </Button>
-            <Button
-              onClick={() => setCurrentView('notices')}
-              variant={currentView === 'notices' ? 'default' : 'ghost'}
-              size="sm"
-            >
-              Notice Board
-            </Button>
-            {user.role === 'admin' && (
-              <Button
-                onClick={() => setCurrentView('users')}
-                variant={currentView === 'users' ? 'default' : 'ghost'}
-                size="sm"
-              >
-                User Management
-              </Button>
-            )}
-          </nav>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          {currentView === 'dashboard' && (
-            <>
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Contacts</CardTitle>
-                    <span className="text-2xl">📞</span>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{stats.contacts}</div>
-                    <p className="text-xs text-muted-foreground">
-                      Total contacts in system
-                    </p>
-                  </CardContent>
-                </Card>
+        {/* Main Content */}
+        <main className="py-6 px-4 sm:px-6 lg:px-8 max-h-[calc(100vh-200px)] overflow-y-auto">
+          <div className="py-6">
+            {currentView === 'dashboard' && (
+              <>
+                {/* Stats Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">Contacts</CardTitle>
+                      <span className="text-2xl">📞</span>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{stats.contacts}</div>
+                      <p className="text-xs text-muted-foreground">
+                        Total contacts in system
+                      </p>
+                    </CardContent>
+                  </Card>
 
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -281,8 +282,9 @@ function Dashboard({ user, onLogout }) {
           {currentView === 'companies' && <Companies user={user} />}
           {currentView === 'notices' && <NoticeBoard user={user} />}
           {currentView === 'users' && user.role === 'admin' && <UserManagement user={user} />}
-        </div>
-      </main>
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import Contacts from './components/Contacts'
+import Companies from './components/Companies'
+import NoticeBoard from './components/NoticeBoard'
+import UserManagement from './components/UserManagement'
+import Layout from './components/Layout'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -52,12 +57,15 @@ function App() {
               user ? <Navigate to="/dashboard" replace /> : <Login onLogin={handleLogin} />
             }
           />
-          <Route
-            path="/dashboard/*"
-            element={
-              user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/login" replace />
-            }
-          />
+          {user && (
+            <Route path="/" element={<Layout user={user} onLogout={handleLogout} />}> 
+              <Route path="dashboard" element={<Dashboard user={user} onLogout={handleLogout} />} />
+              <Route path="contacts" element={<Contacts user={user} />} />
+              <Route path="companies" element={<Companies user={user} />} />
+              <Route path="notices" element={<NoticeBoard user={user} />} />
+              {user.role === 'admin' && <Route path="users" element={<UserManagement user={user} />} />}
+            </Route>
+          )}
           <Route
             path="/"
             element={<Navigate to={user ? "/dashboard" : "/login"} replace />}

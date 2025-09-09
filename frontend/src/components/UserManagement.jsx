@@ -154,13 +154,13 @@ function UserManagement({ user }) {
   const getRoleColor = (role) => {
     switch (role) {
       case 'admin':
-        return 'bg-red-100 text-red-800'
+  return 'bg-destructive/20 text-destructive'
       case 'editor':
-        return 'bg-blue-100 text-blue-800'
+  return 'bg-primary/20 text-primary'
       case 'user':
-        return 'bg-green-100 text-green-800'
+  return 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
       default:
-        return 'bg-gray-100 text-gray-800'
+  return 'bg-muted text-muted-foreground'
     }
   }
 
@@ -175,12 +175,10 @@ function UserManagement({ user }) {
 
   if (user.role !== 'admin') {
     return (
-      <div className="px-4 sm:px-6 lg:px-8">
+  <div className="px-4 sm:px-6 lg:px-8">
         <div className="text-center py-12">
-          <h1 className="text-2xl font-semibold text-gray-900">Access Denied</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            You don't have permission to access user management.
-          </p>
+          <h1 className="text-2xl font-semibold text-foreground">Access Denied</h1>
+          <p className="mt-2 text-sm text-muted-foreground">You don't have permission to access user management.</p>
         </div>
       </div>
     )
@@ -195,13 +193,11 @@ function UserManagement({ user }) {
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div className="w-full">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-900">User Management</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            Manage user accounts, roles, and permissions.
-          </p>
+          <h1 className="text-2xl font-semibold text-foreground">User Management</h1>
+          <p className="mt-2 text-sm text-muted-foreground">Manage user accounts, roles, and permissions.</p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
@@ -210,7 +206,7 @@ function UserManagement({ user }) {
               resetForm()
               setShowForm(true)
             }}
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Add User
           </button>
@@ -222,19 +218,19 @@ function UserManagement({ user }) {
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              <div className="absolute inset-0 bg-foreground/40"></div>
             </div>
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div className="inline-block align-bottom bg-card text-card-foreground rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <form onSubmit={handleFormSubmit}>
-                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="bg-card px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
+                      <h3 className="text-lg leading-6 font-medium text-foreground mb-4">
                         {editingUser ? 'Edit User' : 'Add New User'}
                       </h3>
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
+                          <label className="block text-sm font-medium text-muted-foreground">
                             Username *
                           </label>
                           <input
@@ -242,11 +238,11 @@ function UserManagement({ user }) {
                             required
                             value={formData.username}
                             onChange={(e) => setFormData({...formData, username: e.target.value})}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border border-input bg-background shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
+                          <label className="block text-sm font-medium text-muted-foreground">
                             Email *
                           </label>
                           <input
@@ -254,17 +250,17 @@ function UserManagement({ user }) {
                             required
                             value={formData.email}
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border border-input bg-background shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
+                          <label className="block text-sm font-medium text-muted-foreground">
                             Role
                           </label>
                           <select
                             value={formData.role}
                             onChange={(e) => setFormData({...formData, role: e.target.value})}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border border-input bg-background shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                           >
                             <option value="user">User</option>
                             <option value="editor">Editor</option>
@@ -272,7 +268,7 @@ function UserManagement({ user }) {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
+                          <label className="block text-sm font-medium text-muted-foreground">
                             Password {editingUser ? '(leave blank to keep current)' : '*'}
                           </label>
                           <input
@@ -280,11 +276,11 @@ function UserManagement({ user }) {
                             required={!editingUser}
                             value={formData.password}
                             onChange={(e) => setFormData({...formData, password: e.target.value})}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border border-input bg-background shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
+                          <label className="block text-sm font-medium text-muted-foreground">
                             Confirm Password {editingUser ? '(leave blank to keep current)' : '*'}
                           </label>
                           <input
@@ -292,7 +288,7 @@ function UserManagement({ user }) {
                             required={!editingUser}
                             value={formData.confirmPassword}
                             onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border border-input bg-background shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                           />
                         </div>
                         <div className="flex items-center">
@@ -301,9 +297,9 @@ function UserManagement({ user }) {
                             type="checkbox"
                             checked={formData.is_active}
                             onChange={(e) => setFormData({...formData, is_active: e.target.checked})}
-                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            className="h-4 w-4 text-primary focus:ring-primary border-input rounded"
                           />
-                          <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900">
+                          <label htmlFor="is_active" className="ml-2 block text-sm text-foreground">
                             Active
                           </label>
                         </div>
@@ -311,10 +307,10 @@ function UserManagement({ user }) {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div className="bg-muted px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="submit"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-primary-foreground text-base font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
                   >
                     {editingUser ? 'Update' : 'Create'}
                   </button>
@@ -325,7 +321,7 @@ function UserManagement({ user }) {
                       setEditingUser(null)
                       resetForm()
                     }}
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-border shadow-sm px-4 py-2 bg-card text-base font-medium text-muted-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                   >
                     Cancel
                   </button>
@@ -338,96 +334,92 @@ function UserManagement({ user }) {
 
       {/* Users Table */}
       <div className="mt-8 flex flex-col">
-        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      User
-                    </th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Role
-                    </th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Status
-                    </th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Created
-                    </th>
-                    <th className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">Actions</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {users.map((userData) => (
-                    <tr key={userData.id}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                        <div>
-                          <div className="font-medium text-gray-900">{userData.username}</div>
-                          <div className="text-gray-500">{userData.email}</div>
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getRoleColor(userData.role)}`}>
-                          {userData.role}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          userData.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        }`}>
-                          {userData.is_active ? 'Active' : 'Inactive'}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {formatDate(userData.created_at)}
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <div className="flex justify-end space-x-2">
-                          <button
-                            onClick={() => toggleActive(userData.id, userData.is_active)}
-                            className={`text-sm ${userData.is_active ? 'text-gray-600 hover:text-gray-900' : 'text-green-600 hover:text-green-900'}`}
-                          >
-                            {userData.is_active ? 'Deactivate' : 'Activate'}
-                          </button>
-                          <button
-                            onClick={() => handleEdit(userData)}
-                            className="text-indigo-600 hover:text-indigo-900 text-sm"
-                          >
-                            Edit
-                          </button>
-                          {userData.id !== user.id && (
-                            <button
-                              onClick={() => handleDelete(userData.id)}
-                              className="text-red-600 hover:text-red-900 text-sm"
-                            >
-                              Delete
-                            </button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div className="overflow-hidden shadow ring-1 ring-border md:rounded-lg">
+          <table className="min-w-full divide-y divide-border">
+            <thead className="bg-muted">
+              <tr>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
+                  User
+                </th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
+                  Role
+                </th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
+                  Status
+                </th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
+                  Created
+                </th>
+                <th className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border bg-card">
+              {users.map((userData) => (
+                <tr key={userData.id}>
+                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                    <div>
+            <div className="font-medium text-foreground">{userData.username}</div>
+            <div className="text-muted-foreground">{userData.email}</div>
+                    </div>
+                  </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getRoleColor(userData.role)}`}>
+                      {userData.role}
+                    </span>
+                  </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            userData.is_active ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-destructive/20 text-destructive'
+                    }`}>
+                      {userData.is_active ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">
+                    {formatDate(userData.created_at)}
+                  </td>
+                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <div className="flex justify-end space-x-2">
+                      <button
+                        onClick={() => toggleActive(userData.id, userData.is_active)}
+            className={`text-sm ${userData.is_active ? 'text-muted-foreground hover:text-foreground' : 'text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300'}`}
+                      >
+                        {userData.is_active ? 'Deactivate' : 'Activate'}
+                      </button>
+                      <button
+                        onClick={() => handleEdit(userData)}
+            className="text-primary hover:opacity-80 text-sm"
+                      >
+                        Edit
+                      </button>
+                      {userData.id !== user.id && (
+                        <button
+                          onClick={() => handleDelete(userData.id)}
+              className="text-destructive hover:opacity-80 text-sm"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
       {users.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">No users found.</p>
+          <p className="text-muted-foreground">No users found.</p>
           <button
             onClick={() => {
               setEditingUser(null)
               resetForm()
               setShowForm(true)
             }}
-            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-primary text-primary-foreground hover:opacity-90"
           >
             Create your first user
           </button>

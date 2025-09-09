@@ -21,8 +21,8 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="max-w-md w-full bg-card shadow-lg rounded-lg p-6 text-card-foreground">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,17 +30,17 @@ class ErrorBoundary extends React.Component {
                 </svg>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-gray-800">
+                <h3 className="text-sm font-medium text-foreground">
                   Something went wrong
                 </h3>
-                <div className="mt-2 text-sm text-gray-700">
+                <div className="mt-2 text-sm text-muted-foreground">
                   <p>An unexpected error occurred. Please try refreshing the page.</p>
                 </div>
                 <div className="mt-4">
                   <div className="-mx-2 -my-1.5 flex">
                     <button
                       onClick={() => window.location.reload()}
-                      className="bg-red-50 px-2 py-1.5 rounded-md text-sm font-medium text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600"
+                      className="bg-destructive/10 px-2 py-1.5 rounded-md text-sm font-medium text-destructive hover:bg-destructive/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-destructive"
                     >
                       Refresh Page
                     </button>
@@ -50,8 +50,8 @@ class ErrorBoundary extends React.Component {
             </div>
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="mt-4">
-                <summary className="cursor-pointer text-sm text-gray-600">Error Details (Development)</summary>
-                <pre className="mt-2 text-xs text-gray-800 bg-gray-100 p-2 rounded overflow-auto">
+                <summary className="cursor-pointer text-sm text-muted-foreground">Error Details (Development)</summary>
+                <pre className="mt-2 text-xs text-foreground bg-muted p-2 rounded overflow-auto">
                   {this.state.error.toString()}
                   {this.state.errorInfo.componentStack}
                 </pre>
